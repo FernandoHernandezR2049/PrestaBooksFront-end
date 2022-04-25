@@ -1,23 +1,27 @@
 import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import Login from './pages/Login.js'
+import LibrarianDashboard from './pages/LibrarianDashboard';
 
 function App() {
+  let [jwt, setJwt] = React.useState("");
+  const handleChangeInJwt = (jwt) => {
+    setJwt(jwt);
+    localStorage.setItem("jwt", jwt);
+  }
+
+  useEffect(() => {
+    setJwt(localStorage.getItem("jwt"));
+  }, [])
+
+  const deleteJWT = () => {
+    handleChangeInJwt("");
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {jwt ? <LibrarianDashboard jwt={jwt} deleteJWT={deleteJWT} /> : <Login jwt={jwt} handleChangeInJwt={handleChangeInJwt} />}
+
     </div>
   );
 }
