@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import Book from './Book'
+import BookForm from "./BookForm";
+
 const LibrarianDashboard = (props) => {
     const [books, setBooks] = React.useState([]);
     const fetchBooks = () => {
@@ -29,6 +31,8 @@ const LibrarianDashboard = (props) => {
         <div>
             <button onClick={props.deleteJWT}>Log out</button>
             <h1>Welcome !</h1>
+            <BookForm />
+            <h3>Books in library</h3>
             {books.map(book => {
                 return (<Book key={book.id} title={book.title} author={book.author} isbn={book.isbn} />)
             })}
